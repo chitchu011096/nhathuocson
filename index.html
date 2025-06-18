@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Thuốc</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .search-box input {
+            padding: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quản lý Thuốc</h1>
+    <div class="search-box">
+        <input type="text" id="search" placeholder="Tìm kiếm thuốc..." oninput="filterMedicines()" />
+    </div>
+    <table id="medicine-table">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const medicines = [
+            { name: 'Paracetamol', description: 'Giảm đau hạ sốt', price: '10,000 VND' },
+            { name: 'Amoxicillin', description: 'Kháng sinh điều trị nhiễm khuẩn', price: '20,000 VND' },
+            { name: 'Vitamin C', description: 'Bổ sung vitamin C', price: '15,000 VND' }
+        ];
+
+        function renderTable(list) {
+            const tbody = document.querySelector('#medicine-table tbody');
+            tbody.innerHTML = '';
+            list.forEach(med => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${med.name}</td>
+                    <td>${med.description}</td>
+                    <td>${med.price}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterMedicines() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = medicines.filter(med =>
+                med.name.toLowerCase().includes(query) ||
+                med.description.toLowerCase().includes(query)
+            );
+            renderTable(filtered);
+        }
+
+        // Render the full list on page load
+        renderTable(medicines);
+    </script>
+</body>
+</html>
